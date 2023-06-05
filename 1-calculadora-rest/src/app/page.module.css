@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem;
+  min-height: 100vh;
+}
+
+.header {
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 32px;
+  font-size: 2rem;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.input {
+  margin-bottom: 8px;
+  height: 32px;
+  padding: 8px;
+}
+
+.select {
+  height: 32px;
+}
+
+.button {
+  height: 32px;
+  font-weight: bold;
+}

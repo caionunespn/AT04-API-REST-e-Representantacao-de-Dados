@@ -1,0 +1,85 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem;
+  min-height: 100vh;
+}
+
+.header {
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 32px;
+  font-size: 2rem;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.input {
+  margin-bottom: 8px;
+  height: 32px;
+  padding: 8px;
+}
+
+.select {
+  height: 32px;
+}
+
+.button {
+  height: 32px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.memes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.meme img {
+  width: 300px;
+  height: 300px;
+  margin: 8px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.meme p {
+  font-weight: bold;
+  margin: 8px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.meme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboardHeader p {
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-size: 2rem;
+}
+
+.dashboardHeader div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
