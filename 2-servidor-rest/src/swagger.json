@@ -1,0 +1,562 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Save a Meme",
+    "description": "This is the documentation of Save a Meme server, developped in NodeJS as an activity of Distributed Computing and Communication Networks.",
+    "contact": {
+      "email": "caionunes3000@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "User registration and authentication"
+    },
+    {
+      "name": "meme",
+      "description": "Access the memes"
+    },
+    {
+      "name": "favorite",
+      "description": "Save a meme as favorite"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Create user object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "theUser"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@email.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": 12345678
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@email.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": 12345678
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email/password supplied"
+          }
+        }
+      }
+    },
+    "/meme": {
+      "get": {
+        "tags": [
+          "meme"
+        ],
+        "summary": "Get memes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getMeme",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meme"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Meme"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token / No token provided"
+          }
+        }
+      }
+    },
+    "/meme/proto": {
+      "get": {
+        "tags": [
+          "meme"
+        ],
+        "summary": "Get memes in protocol buffer format",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getMemeListProto",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/protobuf": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token / No token provided"
+          }
+        }
+      }
+    },
+    "/favorite": {
+      "post": {
+        "tags": [
+          "favorite"
+        ],
+        "summary": "Create favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "createFavorite",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Create favorite object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memeExternalId": {
+                    "type": "string",
+                    "example": 1230491
+                  },
+                  "userId": {
+                    "type": "string",
+                    "example": 10
+                  }
+                },
+                "required": [
+                  "memeExternalId",
+                  "userId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorite"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorite"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing information (memeExternalId or userId) / Not found (Meme or User) / Favorite already exists"
+          },
+          "403": {
+            "description": "Invalid token / No token provided"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "favorite"
+        ],
+        "summary": "Get favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getFavorite",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "User ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Favorite"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorite"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing information (memeExternalId or userId) / Not found (Meme or User) / Favorite already exists"
+          },
+          "403": {
+            "description": "Invalid token / No token provided"
+          }
+        }
+      }
+    },
+    "/favorite/{id}": {
+      "delete": {
+        "tags": [
+          "favorite"
+        ],
+        "summary": "Delete favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "deleteFavorite",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Favorite ID to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "JSON or XML",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "JSON"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "xml": {
+                    "name": "root"
+                  },
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing information (memeExternalId or userId) / Not found (Meme or User) / Favorite already exists"
+          },
+          "403": {
+            "description": "Invalid token / No token provided"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "Meme": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "example": "theDog"
+          },
+          "url": {
+            "type": "string",
+            "example": "http://memeimg.com/102930"
+          },
+          "externalId": {
+            "type": "string",
+            "example": 12309104
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          }
+        },
+        "xml": {
+          "name": "meme"
+        }
+      },
+      "Favorite": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "memeId": {
+            "type": "string",
+            "example": 12309104
+          },
+          "userId": {
+            "type": "string",
+            "example": 10
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          }
+        },
+        "xml": {
+          "name": "favorite"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

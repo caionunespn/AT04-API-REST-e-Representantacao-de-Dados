@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Meme {
+    string name = 1;
+    string url = 2;
+    string externalId = 3;
+}
+
+message MemeList {
+    repeated Meme memes = 1;
+}
